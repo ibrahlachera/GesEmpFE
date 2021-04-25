@@ -1,0 +1,91 @@
+<div class="row">
+    <div class="col-md-10 mx-auto">
+        <h1 align="center">La fiche d'employé : {{employeeShow.first_name}} {{employeeShow.last_name}}</h1>
+    </div>
+</div>
+
+<div class="uk-card uk-card-default uk-card-hover uk-card-body">
+    <div class="row">
+        <div class="col-md-5 image">
+            <a routerLink="/">Retourner vers la page d'accueil</a>
+            <h4>Photo d'employé</h4>
+            <img [src]="employeeShow.picture" alt="" width="400px" height="400px">
+        </div>
+        <div class="col-md-6">
+                <h4>Information Personnelles:</h4>
+                <div class="row">
+                    <table class="uk-table uk-table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nom et prénom :</th>
+                                <th>{{employeeShow.first_name}} {{employeeShow.last_name}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CIN</td>
+                                <td>{{employeeShow.cin}}</td>
+                            </tr>
+                            <tr>
+                                <td>Adresse:</td>
+                                <td>{{employeeShow.adrress}}</td>
+                            </tr>
+                            <tr>
+                                <td>Téléphone:</td>
+                                <td>{{employeeShow.tel}}</td>
+                            </tr>
+                            <tr>
+                                <td>CNSS:</td>
+                                <td>{{employeeShow.cnss}}</td>
+                            </tr>
+                            <tr>
+                                <td>Date d'embauche:</td>
+                                <td>{{employeeShow.hire_date}}</td>
+                            </tr>
+                            <tr>
+                                <td>Date de sortie:</td>
+                                <td>{{employeeShow.out_date}}</td>
+                            </tr>
+                            <tr>
+                                <td>Age:</td>
+                                <td>{{employeeShow.age}}</td>
+                            </tr>
+                            <tr>
+                                <td>Lieu de naissance:</td>
+                                <td>{{employeeShow.birth_place}}</td>
+                            </tr>
+                            <tr>
+                                <td>Solde de congé:</td>
+                                <td>{{employeeShow.holiday_sold}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="uk-card uk-card-secondary uk-card-hover uk-card-body uk-light">
+    <h4>Les congés de : {{employeeShow.first_name}} {{employeeShow.last_name}}</h4>
+    <table class="uk-table uk-table-hover uk-table-divider">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nom Complet</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Type de congé</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td>Nom Complet</td>
+                <td>Date de début</td>
+                <td>Date de fin</td>
+                <td>Type de congé</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

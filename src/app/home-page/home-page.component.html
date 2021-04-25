@@ -1,0 +1,33 @@
+<div class="row infos">
+    <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="col-md-10 mx-auto">
+            
+                <div class="uk-card uk-card-hover uk-card-default uk-card-body uk-width-1-2@m" id="admin-info">
+                    <div class="col-md-10 mx-auto">
+                        <img src="../../assets/admin-settings-male.png" alt="" class="admin-picture"/>
+                    </div>
+                    <div class="admin-info">
+                        <h2 align="center" class="uk-card-title">Administrateur</h2>
+                          Information sur l'administrateur
+                            <ul>
+                                <li>
+                                    Nom : {{admin.first_name}}
+                                </li>
+                                <li>
+                                    Prénom : {{admin.last_name}}
+                                </li>
+                            </ul>
+                  
+                    </div>
+                    <div class="logout">
+                        <button class="btn btn-secondary btn-block" (click)="logout()">Se déconnecter</button>
+                    </div>
+                     </div>
+            </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-8">
+        <div class="mt-4">
+            <app-infos-page></app-infos-page>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+.login{
+
+    margin-top:100px;
+
+}
+
+.login-card{
+    border-radius: 50px;
+    background-color: transparent;
+}
+
+label, h5.connect, h5.mesage{
+    color: black;
+}
+
+img{
+    position:relative;
+    bottom: 110px;
+}
+
+.form-connect{
+    position:relative;
+    bottom: 110px;
+}

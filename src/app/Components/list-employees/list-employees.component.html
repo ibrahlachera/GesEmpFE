@@ -1,0 +1,198 @@
+<div class="row mt-4">
+    <div class="col-lg-5 col-md-5 col-sm-5">
+        Liste des employées de la société HLALA GAZ: 
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 offset-md-4">
+        <button class="btn btn-primary btn-block" uk-tooltip="Ajouter un nouveau employé" uk-toggle="target: #modal-example"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <table class="uk-table uk-table-hover uk-table-divider">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Image</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>CIN</th>
+                    <th>En service</th>
+                    <th>Jours de congé</th>
+                    <th>Consomé</th>
+                    <th>Solde</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let employee of employeesList; let i = index">
+                <th>{{i+1}}</th>
+                <th><img [src]="employee.picture" width="50px" height="50px" alt="" uk-img></th>
+                <th>{{employee.first_name}}</th>
+                <th>{{employee.last_name}}</th>
+                <th>{{employee.cin}}</th>
+                <th>
+                   <span *ngIf="!employee.out_date"><i class="fa fa-check-circle-o service-on" aria-hidden="true"></i> </span>
+                   <span *ngIf="employee.out_date"><i class="fa fa-times-circle-o service-off" aria-hidden="true"></i> </span>
+</th>
+                <th>{{employee.holiday_sold}}</th>
+                <th>{{employee.holiday_consum}}</th>
+                <th>{{employee.holiday_sold - employee.holiday_consum}}</th>
+                <th>
+                    <a class="btn btn-success" uk-tooltip="Modifier" uk-toggle="target: #modal-edit" [id]="employee._id" (click)="buttonClicked(employee._id)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a class="btn btn-primary ml-4" uk-tooltip="Visualiser"  [routerLink]="['/show-employee',employee._id]" ><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a class="btn btn-warning ml-4" *ngIf="!employee.out_date" uk-tooltip="A quitter" uk-toggle="target: #modal-edit-date-out" [id]="employee._id" (click)="buttonClicked(employee._id)"><i class="fa fa-outdent" aria-hidden="true"></i></a>
+                    <a class="btn btn-danger ml-4" uk-tooltip="Supprimer" (click)="deleteEmployee(employee._id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <a class="btn btn-secondary ml-4" *ngIf="!employee.out_date" uk-tooltip="Ajouter un congé" uk-toggle="target: #modal-add-holiday" [id]="employee._id" (click)="buttonClicked(employee._id)"><i class="fa fa-plane" aria-hidden="true"></i></a>
+                </th>
+               </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="modal-example" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Ajouter un nouveau employé</h2> 
+        <button class="uk-modal-close-default" #closebutton type="button" uk-close></button>
+        <form [formGroup]="form">
+            <fieldset class="uk-fieldset">
+                <div class="uk-margin">
+                    <label>Nom</label>
+                    <input class="uk-input" type="text" placeholder="Nom" formControlName="first_name" >
+                </div>
+                <div class="uk-margin">
+                    <label>Prénom</label>
+                    <input class="uk-input" type="text" placeholder="Prénom" formControlName="last_name" >
+                </div>   
+                <div class="uk-margin">
+                    <label>Age</label>
+                    <input class="uk-input" type="text" placeholder="Age" formControlName="age">
+                </div> 
+                <div class="uk-margin">
+                    <label>Lieu de naissance</label>
+                    <input class="uk-input" type="text" placeholder="Lieu de naissance" formControlName="birth_place">
+                </div> 
+                <div class="uk-margin">
+                    <label>CIN</label>
+                    <input class="uk-input" type="text" placeholder="CIN" formControlName="cin">
+                </div> 
+                <div class="uk-margin">
+                    <label>CNSS</label>
+                    <input class="uk-input" type="text" placeholder="CNSS" formControlName="cnss" >
+                </div> 
+                <div class="uk-margin">
+                    <label>Adresse</label>
+                    <input class="uk-input" type="text" placeholder="Adresse" formControlName="adrress">
+                </div> 
+                <div class="uk-margin">
+                    <label>Téléphone</label>
+                    <input class="uk-input" type="text" placeholder="Téléphone" formControlName="tel">
+                </div> 
+                <div class="uk-margin">
+                    <label>Photo d'employé</label>
+                    <input class="uk-input" type="file" placeholder="Photo d'employé" (change)="onImagePicked($event)">
+                </div> 
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Annuler</button>
+                <button class="uk-button uk-button-primary" type="button" (click)="addOneEmployee()">Enregistrer</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<div id="modal-edit" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Modifier un employé</h2> 
+        <button class="uk-modal-close-default" #closebuttonedit type="button" uk-close></button>
+        <form [formGroup]="editForm">
+            <fieldset class="uk-fieldset">
+                <div class="uk-margin">
+                    <label>Nom</label>
+                    <input class="uk-input" type="text" placeholder="Nom" formControlName="first_name" >
+                </div>
+                <div class="uk-margin">
+                    <label>Prénom</label>
+                    <input class="uk-input" type="text" placeholder="Prénom" formControlName="last_name" >
+                </div>   
+                <div class="uk-margin">
+                    <label>Age</label>
+                    <input class="uk-input" type="text" placeholder="Age" formControlName="age">
+                </div> 
+                <div class="uk-margin">
+                    <label>Lieu de naissance</label>
+                    <input class="uk-input" type="text" placeholder="Lieu de naissance" formControlName="birth_place">
+                </div> 
+                <div class="uk-margin">
+                    <label>CIN</label>
+                    <input class="uk-input" type="text" placeholder="CIN" formControlName="cin">
+                </div> 
+                <div class="uk-margin">
+                    <label>CNSS</label>
+                    <input class="uk-input" type="text" placeholder="CNSS" formControlName="cnss" >
+                </div> 
+                <div class="uk-margin">
+                    <label>Adresse</label>
+                    <input class="uk-input" type="text" placeholder="Adresse" formControlName="adrress">
+                </div> 
+                <div class="uk-margin">
+                    <label>Téléphone</label>
+                    <input class="uk-input" type="text" placeholder="Téléphone" formControlName="tel">
+                </div> 
+                <div class="uk-margin">
+                    <label>Photo d'employé</label>
+                    <input class="uk-input" type="file" placeholder="Photo d'employé" (change)="onImagePickedEdit($event)">
+                </div>
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Annuler</button>
+                <button class="uk-button uk-button-primary" type="button" (click)="editOneEmployee()">Enregistrer</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<div id="modal-edit-date-out" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Saisir la date de sortie</h2> 
+        <button class="uk-modal-close-default" #closebuttondate type="button" uk-close></button>
+        <form [formGroup]="editDate">
+            <fieldset class="uk-fieldset">
+                <div class="uk-margin">
+                    <label>Date de sortie</label>
+                    <input class="uk-input" type="date" placeholder="out_date" formControlName="out_date" >
+                </div>
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Annuler</button>
+                <button class="uk-button uk-button-primary" type="button" (click)="editOutDateEmployee()">Enregistrer</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+
+<div id="modal-add-holiday" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Ajout de congé:</h2> 
+        <button class="uk-modal-close-default" #closebuttonholiday type="button" uk-close></button>
+        <form [formGroup]="addholiday">
+            <fieldset class="uk-fieldset">
+                <div class="uk-margin">
+                    <label>Date de début de congé</label>
+                    <input class="uk-input" type="date" placeholder="begin_date" formControlName="begin_date" >
+                </div>
+                <div class="uk-margin">
+                    <label>Date de fin de congé</label>
+                    <input class="uk-input" type="date" placeholder="end_date" formControlName="end_date" >
+                </div>
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-stacked-select">Type de congé</label>
+                    <div class="uk-form-controls">
+                        <select class="uk-select" id="form-stacked-select" placeholder="type_holiday" formControlName="type_holiday">
+                            <option value="PAYE">Payé</option>
+                            <option value="NON-PAYE">Non-payé (Maladie ...)</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Annuler</button>
+                <button class="uk-button uk-button-primary" type="button" (click)="addHoliday()">Enregistrer</button>
+            </fieldset>
+        </form>
+    </div>
+</div>

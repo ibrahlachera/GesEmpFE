@@ -1,0 +1,81 @@
+<div class="row mt-4">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+        Liste des congés des employés de la société HLALA GAZ: 
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <table class="uk-table uk-table-hover uk-table-divider">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Nom Complet</th>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Typede congé</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let holiday of holidays; let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{holiday.employee.first_name}} {{holiday.employee.last_name}}</td>
+                    <td>{{holiday.begin_date | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{holiday.end_date | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{holiday.type_holiday}}</td>
+                    <td>
+                        <a class="btn btn-success" uk-tooltip="Modifier" uk-toggle="target: #modal-edit-holiday" [id]="holiday._id" (click)="buttonClicked(holiday._id)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a class="btn btn-primary ml-4" uk-tooltip="Visualiser" uk-toggle="target: #modal-show-holiday" [id]="holiday._id" (click)="buttonClickedShow(holiday._id)" ><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a class="btn btn-danger ml-4" uk-tooltip="Supprimer" (click)="deleteEmployee(holiday._id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    </td>
+                    <div id="modal-show-holiday" uk-modal>
+                        <div class="uk-modal-dialog uk-modal-body">
+                            <h2 class="uk-modal-title">Informations sur le congé :</h2> 
+                            <button class="uk-modal-close-default" #closebuttonholiday type="button" uk-close></button>
+                            <ul>
+                                <li>Nom complet d'employé : {{holiday.employee.first_name}}  {{holiday.employee.last_name}}</li>
+                                <li>Date de début : {{holiday.begin_date}}</li>
+                                <li>Date de fin : {{holiday.end_date}}</li>
+                                <li>Type de congé : {{holiday.type_holiday}}</li>
+                            </ul>
+                        </div>
+                    </div>
+               </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="modal-edit-holiday" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Modification du congé:</h2> 
+        <button class="uk-modal-close-default" #closebuttonholidayedit type="button" uk-close></button>
+        <form [formGroup]="editholiday">
+            <fieldset class="uk-fieldset">
+                <div class="uk-margin">
+                    <label>Date de début de congé</label>
+                    <input class="uk-input" type="date" placeholder="begin_date" formControlName="begin_date" >
+                </div>
+                <div class="uk-margin">
+                    <label>Date de fin de congé</label>
+                    <input class="uk-input" type="date" placeholder="end_date" formControlName="end_date" >
+                </div>
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="form-stacked-select">Type de congé</label>
+                    <div class="uk-form-controls">
+                        <select class="uk-select" id="form-stacked-select" placeholder="type_holiday" formControlName="type_holiday">
+                            <option value="PAYE">Payé</option>
+                            <option value="NON-PAYE">Non-payé (Maladie ...)</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Annuler</button>
+                <button class="uk-button uk-button-primary" type="button" (click)="editHoliday()">Enregistrer</button>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+
+

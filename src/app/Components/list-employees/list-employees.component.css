@@ -1,0 +1,15 @@
+.search{
+    margin-left: 3px;
+}
+
+.service-on{
+    color: green;
+}
+
+.service-off{
+    color: red;
+}
+
+img{
+    border-radius: 20px;
+}
