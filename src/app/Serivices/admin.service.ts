@@ -71,6 +71,9 @@ private authStatusListener = new Subject<boolean>();
   getAllHolidays(){
     return this.httpCLient.get(`${this.url}/allHolidays`);
   }
+  getAllHolidaysForEmployee(id){
+    return this.httpCLient.get(`${this.url}/allHolidays/${id}`);
+  }
 
   getOneHoliday(id){
     return this.httpCLient.get(`${this.url}/oneHoliday/${id}`);

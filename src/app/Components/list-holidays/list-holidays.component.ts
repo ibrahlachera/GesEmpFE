@@ -47,6 +47,13 @@ id_hol:string;
     })
   }
 
+  changeDate(){
+    let nbrjr = moment(this.holidayedit.end_date).diff(moment(this.holidayedit.begin_date),'days')
+    let dateBegin = moment(this.editholiday.get('begin_date').value);
+    let dateEnd = dateBegin.add(nbrjr,'days').format('YYYY-MM-DD');
+    this.editholiday.get('end_date').setValue(dateEnd)
+  }
+
   editHoliday(){
       if(this.editholiday.valid){
         this.adminService.editHolidayToEmployee(this.editholiday.value,this.holidayedit.employee._id,this.holidayedit._id).subscribe(()=>{
@@ -69,6 +76,7 @@ id_hol:string;
     })
   }
   deleteEmployee(id){
+  
     Swal.fire({
       title: 'Etes-vous sur de le supprimer',
       text: "Vous ne pouvez pas le récuprer si vous confirmez",
@@ -79,6 +87,17 @@ id_hol:string;
       confirmButtonText: 'Oui'
     }).then((result) => {
       if (result.isConfirmed) {
+        this.adminService.getOneHoliday(id).subscribe((holiday:Holiday)=>{
+          if(holiday.type_holiday == "PAYE"){
+             let nbrjr = moment(holiday.end_date).diff(holiday.begin_date,'days')+1;
+          
+          this.adminService.getOneEmployee(holiday.employee._id).subscribe((employee:Employee)=>{
+            let newconsom = {holiday_consum: -nbrjr}
+
+           this.adminService.editConsumEmployee(holiday.employee._id, newconsom).subscribe(()=>console.log('Consomation modifié'));
+          })
+          }
+        })
         this.adminService.deleteHoliday(id).subscribe(()=>{
           Swal.fire(
             'Deleted!',

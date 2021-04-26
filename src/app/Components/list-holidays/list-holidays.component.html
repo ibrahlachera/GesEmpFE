@@ -55,7 +55,7 @@
             <fieldset class="uk-fieldset">
                 <div class="uk-margin">
                     <label>Date de début de congé</label>
-                    <input class="uk-input" type="date" placeholder="begin_date" formControlName="begin_date" >
+                    <input class="uk-input" type="date" placeholder="begin_date" (change)="changeDate()" formControlName="begin_date" >
                 </div>
                 <div class="uk-margin">
                     <label>Date de fin de congé</label>
@@ -64,7 +64,7 @@
                 <div class="uk-margin">
                     <label class="uk-form-label" for="form-stacked-select">Type de congé</label>
                     <div class="uk-form-controls">
-                        <select class="uk-select" id="form-stacked-select" placeholder="type_holiday" formControlName="type_holiday">
+                        <select class="uk-select" id="form-stacked-select" placeholder="type_holiday" formControlName="type_holiday" disabled>
                             <option value="PAYE">Payé</option>
                             <option value="NON-PAYE">Non-payé (Maladie ...)</option>
                         </select>

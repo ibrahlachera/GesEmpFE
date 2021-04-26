@@ -72,12 +72,18 @@ editDate: FormGroup;
       this.adminService.getAllEmployees().subscribe((employees:Employee[])=>{
         this.employeesList = employees;
         this.employeesList.forEach((employee:Employee)=>{
-          let hiredate = moment(employee.hire_date);
+          if(employee.hire_date != null){
+             let hiredate = moment(employee.hire_date);
           let now = moment(new Date());
           let result = now.diff(hiredate,'months');
           let soldeCalcul = result*1.5;
           let sold = {holiday_sold : String(soldeCalcul)}
           this.adminService.editSoldeEmployee(employee._id,sold).subscribe((ok)=>console.log("Solde modifié"))
+          }else{
+            let sold = {holiday_sold : String(0)}
+            this.adminService.editSoldeEmployee(employee._id,sold).subscribe((ok)=>console.log("Solde modifié"))
+          }
+         
         })
       })
   }

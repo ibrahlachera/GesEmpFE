@@ -79,12 +79,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td></td>
-                <td>Nom Complet</td>
-                <td>Date de début</td>
-                <td>Date de fin</td>
-                <td>Type de congé</td>
+             <tr *ngFor="let holiday of holidays; let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{holiday.employee.first_name}} {{holiday.employee.last_name}}</td>
+                    <td>{{holiday.begin_date | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{holiday.end_date | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{holiday.type_holiday}}</td>
             </tr>
         </tbody>
     </table>
